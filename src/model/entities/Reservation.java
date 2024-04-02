@@ -1,10 +1,8 @@
 package model.entities;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
-
-import javax.swing.text.DateFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class Reservation {
 	private Integer roomNumber;
@@ -37,9 +35,9 @@ public class Reservation {
 		return checkOut;
 	}
 	
-	public int duration () {
-		Period p = Period.between(checkOut, checkIn);
-		return p.getDays();
+	public long duration () {
+		long p = ChronoUnit.DAYS.between(checkIn, checkOut);
+		return p;
 	}
 	
 	public void updateDates (LocalDate checkIn, LocalDate checkOut) {
@@ -48,11 +46,13 @@ public class Reservation {
 	}
 	@Override
 	public String toString() {
-		return "Room"
+		return "Room: "
 				+roomNumber
 				+", Check-in: "
 				+formatter.format(checkIn)
 				+", Check-out: "
-				+formatter.format(checkOut);
+				+formatter.format(checkOut)
+				+", "
+				+duration()+" nights";
 	}
 }
