@@ -41,18 +41,16 @@ public class Reservation {
 		return p;
 	}
 
-	public String updateDates(LocalDate checkIn, LocalDate checkOut) {
+	public void updateDates(LocalDate checkIn, LocalDate checkOut) {
 		LocalDate now = LocalDate.now();
 		if (checkIn.isBefore(now) || checkOut.isBefore(now)) {
-			return "Error: check-in or check-out before now";
+			throw new IllegalArgumentException("check-in or check-out before now");
 		}
 		if (!checkOut.isAfter(checkIn)) {
-			return "Error in reservation check-out before check-in";
+			throw new IllegalArgumentException("check-out before check-in");
 		}
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
-		return null;
-
 	}
 
 	@Override
