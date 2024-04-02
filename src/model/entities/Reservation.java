@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
+import model.exceptions.DomainException;
+
 public class Reservation {
 	private Integer roomNumber;
 	private LocalDate checkIn;
@@ -41,13 +43,13 @@ public class Reservation {
 		return p;
 	}
 
-	public void updateDates(LocalDate checkIn, LocalDate checkOut) {
+	public void updateDates(LocalDate checkIn, LocalDate checkOut) throws DomainException {
 		LocalDate now = LocalDate.now();
 		if (checkIn.isBefore(now) || checkOut.isBefore(now)) {
-			throw new IllegalArgumentException("check-in or check-out before now");
+			throw new DomainException("check-in or check-out before now");
 		}
 		if (!checkOut.isAfter(checkIn)) {
-			throw new IllegalArgumentException("check-out before check-in");
+			throw new DomainException("check-out before check-in");
 		}
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;

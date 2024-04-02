@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import model.entities.Reservation;
+import model.exceptions.DomainException;
 
 public class App {
 	public static void main(String[] args) {
@@ -34,7 +35,7 @@ public class App {
 			reservation.updateDates(checkin, checkout);
 			System.out.println("Reservation: " + reservation);
 		}
-		catch ( IllegalArgumentException e) {
+		catch ( DomainException e) {
 			System.out.println("Error in reservation: "+e.getMessage());
 		}
 		
