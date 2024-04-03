@@ -17,6 +17,9 @@ public class Reservation {
 	}
 
 	public Reservation(Integer roomNumber, LocalDate checkIn, LocalDate checkOut) {
+		if (!checkOut.isAfter(checkIn)) {
+			throw new DomainException("check-out before check-in");
+		}
 		this.roomNumber = roomNumber;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
@@ -43,7 +46,7 @@ public class Reservation {
 		return p;
 	}
 
-	public void updateDates(LocalDate checkIn, LocalDate checkOut) throws DomainException {
+	public void updateDates(LocalDate checkIn, LocalDate checkOut) {
 		LocalDate now = LocalDate.now();
 		if (checkIn.isBefore(now) || checkOut.isBefore(now)) {
 			throw new DomainException("check-in or check-out before now");
